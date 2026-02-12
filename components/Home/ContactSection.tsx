@@ -18,7 +18,7 @@ export default function ContactSection() {
 
       {/* Background Image */}
       <Image
-        src="/assets/hero/Gradient.png" // change path if needed
+        src="/assets/hero/Gradient.png"
         alt="Background"
         fill
         className="object-cover -z-10"

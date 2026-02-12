@@ -4,6 +4,7 @@ import Image from "next/image";
 import { IconType } from "react-icons";
 import { FiPhone } from "react-icons/fi";
 import { FaShieldAlt, FaAward, FaUsers, FaTools, FaRocket } from "react-icons/fa";
+import { SectionHeader } from "../shared/SectionHeader";
 
 /* =========================
    Reusable Card
@@ -136,44 +137,25 @@ export default function WhyChooseUs() {
       <div className=" mx-auto px-30">
 
         {/* HEADER */}
-        <div className="text-center mb-15">
+    <SectionHeader
+  badgeText="Our Commitment"
+  title={
+    <>
+      WHY <span
+        style={{
+          background: "linear-gradient(90deg, #F262B5 0%, #9F73F1 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+        }}
+      >
+        CHOOSE US
+      </span>
+    </>
+  }
+  description="Our Commitment To Excellence And Your Satisfaction Makes Us The
+  Ideal Partner For Your Visual Communication Projects."
+/>
 
-          {/* Commitment Badge */}
-     <div
-  className="inline-flex items-center justify-center
-             px-8 py-2
-             rounded-full
-             text-white text-[16px] font-medium
-             mb-5 font-sans"
-  style={{
-    background:
-      "conic-gradient(from 147.75deg at 62.65% 113.44%, #5FC5FF 0deg, #D43077 55deg, #8155FF 212.88deg, #789DFF 285.58deg, #9F73F1 356.54deg, #5FC5FF 360deg)",
-    boxShadow: "0px 0px 80px 0px #D43077",
-  }}
->
-  Our Commitment
-</div>
-
-
-
-          {/* Heading */}
-          <h2
-            className="text-5xl md:text-6xl font-semibold mb-5"
-            style={{
-              background:
-                "linear-gradient(90deg, #F262B5 0%, #9F73F1 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
-            WHY CHOOSE US
-          </h2>
-
-          <p className="text-gray-400 max-w-4xl mx-auto text-[20px]">
-            Our Commitment To Excellence And Your Satisfaction Makes Us The
-            Ideal Partner For Your Visual Communication Projects.
-          </p>
-        </div>
 
         {/* CARDS */}
         <div className="grid md:grid-cols-3 gap-8">

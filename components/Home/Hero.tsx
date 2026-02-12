@@ -59,17 +59,17 @@ export default function Hero() {
 
   {/* Free Quote Button */}
   <button
-    className="font-sans px-8 py-3 rounded-full text-white font-medium flex items-center gap-2 relative"
-    style={{
-       background:
-      "conic-gradient(from 147.75deg at 62.65% 113.44%, #5FC5FF 0deg, #D43077 55deg, #8155FF 212.88deg, #789DFF 285.58deg, #9F73F1 356.54deg, #5FC5FF 360deg)",
- 
-      boxShadow: "0px 0px 80px 0px #D43077",
-    }}
-  >
-    Free Quote
-    <ArrowRight size={18} />
-  </button>
+  className="font-sans px-8 py-3 rounded-full text-white font-medium flex items-center gap-2 relative"
+  style={{
+    background:
+      "conic-gradient(from 98deg at 62.65% 113.44%, #5FC5FF 0deg, #FFAC89 135deg, #8155FF 213deg, #789DFF 286deg, #9F73F1 357deg)",
+    boxShadow: "0px 0px 80px #D43077",
+  }}
+>
+  Free Quote
+  <ArrowRight size={18} />
+</button>
+
 
   {/* Our Projects Button (Fixed Rounded Gradient Border) */}
   <button

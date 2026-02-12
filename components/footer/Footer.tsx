@@ -17,7 +17,7 @@ export default function Footer() {
         className="object-cover -z-10"
       />
 
-      <div className="max-w-7xl mx-auto px-8 py-20">
+      <div className="max-w-7xl mx-auto px-8 py-12">
 
         {/* ================= TOP GRID ================= */}
         <div className="grid lg:grid-cols-2 gap-16">
@@ -33,11 +33,9 @@ export default function Footer() {
               and design solutions.
             </p>
 
-            <Button
-              className="rounded-full bg-white text-black hover:bg-white/90 px-6"
-            >
-              GET STARTED
-            </Button>
+          <div className="h-11 px-5 py-2.5 bg-white rounded-[100px] shadow-[0px_0px_85px_0px_rgba(255,255,255,1.00)] outline outline-1 outline-offset-[-1px] outline-white inline-flex justify-center items-center gap-2.5">
+  <div className="text-center justify-start text-zinc-800 font-bold font-hk text-[14px]">GET STARTED</div>
+</div>
           </div>
 
           {/* RIGHT LINKS */}
@@ -80,7 +78,7 @@ export default function Footer() {
         </div>
 
         {/* ================= DIVIDER ================= */}
-        <div className="my-12 border-t border-white/10" />
+        <div className="my-8 border-t border-white/10" />
 
         {/* ================= BOTTOM ROW ================= */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">

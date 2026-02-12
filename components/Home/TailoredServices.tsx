@@ -28,60 +28,108 @@ function ServiceCard({
   const isPink = variant === "pink";
 
   return (
-    <div className="relative rounded-3xl border border-white/20 bg-white/5 backdrop-blur-xl p-10 overflow-hidden group transition-all duration-500 hover:border-white/40">
-
-      {/* Top Glow */}
-      <div
-        className={`absolute -top-20 left-1/2 -translate-x-1/2 w-[400px] h-[200px] blur-3xl opacity-70 ${
-          isPink
-            ? "bg-gradient-to-r from-pink-500/30 via-purple-500/30 to-blue-500/30"
-            : "bg-gradient-to-r from-blue-500/30 via-cyan-500/30 to-indigo-500/30"
-        }`}
+  <div className="relative  rounded-[24px] overflow-hidden">
+ <div
+        className="absolute inset-0 blur-[20px] opacity-100"
+        style={{
+          background:
+            "conic-gradient(from 132deg at 40.63% 50.41%, rgba(242, 98, 181, 0.00) 125.179deg, rgba(95, 197, 255, 0.20) 193.412deg, rgba(255, 172, 137, 0.20) 216.021deg, rgba(129, 85, 255, 0.20) 236.071deg, rgba(120, 157, 255, 0.20) 259.953deg, rgba(159, 115, 241, 0.00) 311.078deg)",
+        }}
       />
+          <div className="relative z-10 rounded-[24px] border border-[#F5F5F580] bg-black/40 backdrop-blur-xl p-8 flex flex-col gap-8">
 
-      {/* Icon */}
+      {/* ICON WRAPPER */}
       <div
-        className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 text-white text-xl ${
-          isPink
-            ? "bg-gradient-to-br from-pink-500 to-purple-600"
-            : "bg-gradient-to-br from-blue-500 to-cyan-600"
+        className={`w-14 h-14 p-2.5 rounded-xl inline-flex justify-center items-center ${
+          isPink ? "bg-pink-400/20" : "bg-blue-400/20"
         }`}
       >
-        <Icon />
-      </div>
-
-      <h3 className="text-2xl font-semibold text-white mb-2">
-        {title}
-      </h3>
-
-      <p className="text-gray-400 mb-6 font-medium">
-        {subtitle}
-      </p>
-
-      <p className="text-gray-400 leading-relaxed mb-6">
-        {description}
-      </p>
-
-      <div className="mb-6">
-        <p className="text-white mb-4 font-medium">Key Services</p>
-
-        <div className="grid grid-cols-2 gap-y-3 text-gray-300 text-sm">
-          {services.map((service, index) => (
-            <div key={index} className="flex items-center gap-2">
-              <span
-                className={`w-2 h-2 rounded-full ${
-                  isPink ? "bg-pink-500" : "bg-blue-500"
-                }`}
-              />
-              {service}
-            </div>
-          ))}
+        <div
+          className={`w-10 h-10 p-2 rounded-lg flex justify-center items-center ${
+            isPink
+              ? "bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600"
+              : "bg-blue-400"
+          }`}
+        >
+          <Icon className="w-6 h-6 text-zinc-100" />
         </div>
       </div>
 
-      <button className="w-full py-3 rounded-full bg-white text-black font-medium hover:bg-gray-200 transition">
-        Learn More →
-      </button>
+      {/* CONTENT */}
+      <div className="self-stretch flex flex-col justify-start items-start gap-4">
+
+        {/* TITLE + SUBTITLE */}
+        <div className="self-stretch flex flex-col gap-4">
+          <div className="w-64 flex flex-col gap-2">
+            <h3 className="text-neutral-100 text-3xl font-bold font-['HK_Grotesk']">
+              {title}
+            </h3>
+            <p className="text-neutral-100/80 text-base font-bold font-['HK_Grotesk']">
+              {subtitle}
+            </p>
+          </div>
+
+          <p className="self-stretch text-neutral-100/80 text-base font-medium font-['HK_Grotesk']">
+            {description}
+          </p>
+        </div>
+
+        {/* KEY SERVICES */}
+        <div className="w-96 flex flex-col gap-6">
+          <div className="flex flex-col gap-5">
+            <p className="text-neutral-100 text-base font-medium font-['HK_Grotesk']">
+              Key Services
+            </p>
+
+            <div className="inline-flex gap-8">
+              {/* Left Column */}
+              <div className="w-44 flex flex-col gap-4">
+                {services.slice(0, 2).map((service, index) => (
+                  <div key={index} className="flex items-center gap-3">
+                    <div
+                      className={`w-2 h-2 rounded-full ${
+                        isPink ? "bg-pink-400" : "bg-blue-400"
+                      }`}
+                    />
+                    <span className="text-neutral-100 text-base font-medium font-['HK_Grotesk']">
+                      {service}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Right Column */}
+              <div className="w-45 flex flex-col gap-4">
+                {services.slice(2, 4).map((service, index) => (
+                  <div key={index} className="flex items-center gap-3">
+                    <div
+                      className={`w-2 h-2 rounded-full ${
+                        isPink ? "bg-pink-400" : "bg-blue-400"
+                      }`}
+                    />
+                    <span className="text-neutral-100 text-base font-medium font-['HK_Grotesk']">
+                      {service}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* BUTTON */}
+      <div
+        className={`self-stretch h-11 px-3 py-1.5 bg-white rounded-[100px] inline-flex justify-center items-center gap-3 ${
+          isPink ? "" : "outline outline-1 outline-black"
+        }`}
+      >
+        <span className="text-zinc-800 text-lg font-semibold font-['HK_Grotesk']">
+          Learn More
+        </span>
+     
+      </div>
+</div>
     </div>
   );
 }
