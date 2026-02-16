@@ -205,3 +205,12 @@ div[role="option"][data-disabled] {
 body {
   font-family: "HK Grotesk", sans-serif !important;
 }
+/* Hide scrollbar but allow scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+

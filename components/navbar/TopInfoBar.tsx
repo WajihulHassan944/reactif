@@ -9,10 +9,10 @@ export default function TopInfoBar() {
       style={{
         background:
           "linear-gradient(90deg, rgba(30,30,30,0.9) 0%, rgba(45,45,55,0.9) 50%, rgba(40,35,45,0.9) 100%)",
-          borderBottom:'2px solid #515151'
+        borderBottom: "2px solid #515151",
       }}
     >
-      {/* ===== Figma glow rectangles ===== */}
+      {/* ===== Glow rectangles ===== */}
 
       {/* Blue glow */}
       <div
@@ -33,11 +33,23 @@ export default function TopInfoBar() {
       />
 
       {/* ===== Content ===== */}
-      <div className="relative mx-auto px-20 h-[40px] flex items-center justify-between">
 
+      <div
+        className="
+          relative mx-auto
+          px-4 sm:px-6 md:px-20
+          py-2 md:py-0
+          md:h-[40px]
+          flex
+          flex-col md:flex-row
+          items-center
+          justify-center md:justify-between
+          gap-2 md:gap-0
+          text-center md:text-left
+        "
+      >
         {/* LEFT */}
-        <div className="flex items-center gap-6 text-[#F5F5F5]">
-
+        <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6 text-[#F5F5F5]">
           <div className="flex items-center gap-2">
             <Phone size={14} />
             <span>+33 1 23 45 67 89</span>
@@ -47,14 +59,13 @@ export default function TopInfoBar() {
             <Mail size={14} />
             <span>contact@company.fr</span>
           </div>
-
         </div>
 
         {/* RIGHT */}
+
         <p className="text-[#F5F5F5] whitespace-nowrap">
           Automotive Visual Communication Expert
         </p>
-
       </div>
     </div>
   );

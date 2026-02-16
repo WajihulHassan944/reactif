@@ -4,45 +4,62 @@ import Image from "next/image";
 import { SectionHeader } from "../shared/SectionHeader";
 import ContactForm from "../forms/ContactForm";
 
-
-export default function WhyChooseUs() {
+export default function StartProjectSection() {
   return (
-    <section className="relative py-28 overflow-hidden">
+
+    <section className="relative py-16 md:py-28 overflow-hidden">
+
 
       {/* Background */}
+
       <Image
         src="/assets/hero/Gradient.png"
         alt="Background"
         fill
         className="object-cover -z-10"
       />
-      
-      <div className=" mx-auto px-40">
-
-        {/* HEADER */}
-    <SectionHeader
-  badgeText="Get in Touch"
-  title={
-    <>
-      START YOUR <span
-        style={{
-          background: "linear-gradient(90deg, #F262B5 0%, #9F73F1 100%)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-        }}
-      >
-        PROJECT
-      </span> TODAY
-    </>
-  }
-  description="Let&apos;s discuss how we can transform your vision into reality"
-/>
 
 
+      <div className="mx-auto px-4 sm:px-6 md:px-40">
 
-<ContactForm />
+
+        {/* Header */}
+
+        <SectionHeader
+
+          badgeText="Get in Touch"
+
+          title={
+            <>
+              START YOUR{" "}
+              <span
+                style={{
+                  background:
+                    "linear-gradient(90deg, #F262B5 0%, #9F73F1 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
+                PROJECT
+              </span>{" "}
+              TODAY
+            </>
+          }
+
+          description="Let's discuss how we can transform your vision into reality"
+
+        />
+
+
+        {/* Contact Form */}
+
+        <ContactForm />
+
 
       </div>
+
+
     </section>
+
   );
 }
