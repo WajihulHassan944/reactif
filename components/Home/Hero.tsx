@@ -13,7 +13,7 @@ export default function Hero() {
       {/* Background Image */}
 
       <Image
-        src="/assets/hero/Gradient.png"
+        src="/assets/hero/gradient.png"
         alt="Background"
         fill
         priority
