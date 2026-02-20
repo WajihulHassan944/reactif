@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { Shield, ArrowRight } from "lucide-react";
 import { FaCheckCircle } from "react-icons/fa";
+import Link from "next/link";
 
 interface PaintProtectionCardProps {
   activeItem: string | null;
@@ -297,7 +298,7 @@ export default function PaintProtectionCard({
 
 
 
-        <div
+        <Link href="/order/address"
           className={`w-full px-4 py-3 rounded-lg flex justify-center items-center gap-2.5 cursor-pointer hover:opacity-90 transition ${activeBg}`}
         >
 
@@ -309,7 +310,7 @@ export default function PaintProtectionCard({
 
           <ArrowRight className="w-4 h-4 text-neutral-50" />
 
-        </div>
+        </Link>
 
 
       </div>

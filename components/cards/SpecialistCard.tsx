@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   FaStar,
   FaMapMarkerAlt,
@@ -245,7 +246,7 @@ export default function SpecialistCard({
 
 
 
-        <div className="flex items-center gap-2 text-stone-300 hover:text-white cursor-pointer transition">
+        <Link href="/vendor-portfolio" className="flex items-center gap-2 text-stone-300 hover:text-white cursor-pointer transition">
 
 
           View Portfolio
@@ -254,7 +255,7 @@ export default function SpecialistCard({
           <FaArrowRight size={12} />
 
 
-        </div>
+        </Link>
 
 
       </div>

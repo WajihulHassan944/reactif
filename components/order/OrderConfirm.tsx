@@ -3,6 +3,7 @@
 import React from "react"
 import { CheckCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default function OrderConfirm() {
   return (
@@ -104,7 +105,7 @@ export default function OrderConfirm() {
           justify-center
           items-center
         ">
-          <Button className="
+          <Link href="/order/track" className="
             h-12
             w-full sm:w-auto
             bg-pink-500
@@ -113,11 +114,13 @@ export default function OrderConfirm() {
             font-semibold
             text-base
             px-8
-            
+            flex
+    items-center
+    justify-center
             rounded-[12px]
           ">
             Track Order Status
-          </Button>
+          </Link>
 
           <Button
             variant="outline"

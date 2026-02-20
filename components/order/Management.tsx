@@ -2,6 +2,7 @@
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ShoppingCart } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 const OrderCard = ({
   title,
@@ -12,6 +13,7 @@ const OrderCard = ({
   showTracking,
   extraButtons = [],
 }: any) => {
+  const router = useRouter();
   return (
     <Card className="w-full bg-neutral-800 border border-neutral-50/30 rounded-xl px-4 sm:px-6 py-6 flex flex-col gap-8">
 
@@ -97,17 +99,21 @@ const OrderCard = ({
       </div>
 
       {/* ACTIONS */}
-      <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4 pt-4 border-t border-neutral-50/10">
+     <div
+  className={`flex flex-col sm:flex-row sm:flex-wrap gap-4 ${
+    (showTracking || extraButtons.length > 0) ? "pt-4 border-t border-neutral-50/10" : ""
+  }`}
+>
 
-        <Button
+        {/* <Button
           variant="outline"
           className="h-11 px-4 py-2 border-neutral-50/30 text-neutral-50 bg-transparent hover:bg-neutral-700 rounded-lg font-hk text-[15px]"
         >
           View Details
-        </Button>
+        </Button> */}
 
         {showTracking && (
-          <Button className="h-11 px-4 py-2 bg-pink-400 hover:bg-pink-500 text-neutral-50 rounded-lg font-hk font-semibold text-[15px]">
+          <Button onClick={()=>router.push('/order/track')} className=" cursor-pointer h-11 px-4 py-2 bg-pink-400 hover:bg-pink-500 text-neutral-50 rounded-lg font-hk font-semibold text-[15px]">
             Track Shipment
           </Button>
         )}
@@ -151,6 +157,7 @@ const Management = () => {
             price="$12,500"
             status="In Production"
             progress={45}
+             showTracking
           />
 
           <OrderCard

@@ -3,6 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import Link from "next/link"
 
 const OrderPayment = () => {
   return (
@@ -99,22 +100,25 @@ const OrderPayment = () => {
               </div>
 
               {/* Pay Button */}
-              <Button
-                className="
-                  w-full
-                  h-12
-                  bg-pink-400
-                  hover:bg-pink-500
-                  rounded-lg
-                  text-neutral-50
-                  text-lg
-                  font-semibold
-                  font-['HK_Grotesk']
-                "
-              >
-                Pay $1250.00
-              </Button>
-
+             <Link
+  href="/order/success"
+  className="
+    w-full
+    h-12
+    bg-pink-400
+    hover:bg-pink-500
+    rounded-lg
+    text-neutral-50
+    text-lg
+    font-semibold
+    font-['HK_Grotesk']
+    flex
+    items-center
+    justify-center
+  "
+>
+  Pay $1250.00
+</Link>
               <p className="text-center text-neutral-50/60 text-sm md:text-base font-medium font-['HK_Grotesk']">
                 Your Payment is securely processed by Stripe
               </p>

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { IconType } from "react-icons";
 import { FaLightbulb, FaPaintRoller, FaCarSide, FaPalette } from "react-icons/fa";
 
@@ -153,7 +154,7 @@ function ServiceCard({
 
         {/* BUTTON */}
 
-        <div
+        <Link href="/all-vendor-services"
           className={`h-11 px-3 py-1.5 bg-white rounded-[100px] flex justify-center items-center ${
             isPink ? "" : "outline outline-1 outline-black"
           }`}
@@ -165,7 +166,7 @@ function ServiceCard({
 
           </span>
 
-        </div>
+        </Link>
 
 
       </div>

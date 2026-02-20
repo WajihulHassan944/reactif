@@ -9,10 +9,16 @@ export default function Home() {
     return (
         <Container>
           <Hero />
-          <TailoredServices />
+         <section id="services">
+             <TailoredServices />
+         </section>
           <WhyChooseUs />
           <ContactSection />
-          <ContactFormSection />
+          
+          <section id="contact">
+            <ContactFormSection />
+          </section>
+
         </Container>
     )
 }

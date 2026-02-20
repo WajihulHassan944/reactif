@@ -9,7 +9,7 @@ const OrderAddress = () => {
     <section className="w-full flex flex-col items-center gap-10 py-8 px-5 md:px-0">
       <PersonalInfo />
       <WhyProtection />
-      <Configuration />
+      <Configuration route="/order/payment" />
     </section>
   )
 }

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Navbar from "../navbar/navbar";
 import { ArrowRight, Car } from "lucide-react";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -83,7 +84,7 @@ export default function Hero() {
 
             {/* Free Quote */}
 
-            <button
+            <Link  href="/all-vendor-services"
               className="font-sans px-6 md:px-8 py-3 rounded-full text-white font-medium flex items-center gap-2 relative"
               style={{
                 background:
@@ -96,13 +97,13 @@ export default function Hero() {
 
               <ArrowRight size={18} />
 
-            </button>
+            </Link>
 
 
 
             {/* Our Projects */}
 
-            <button
+            <Link href="/all-vendor-services"
               className="font-sans px-6 md:px-8 py-3 rounded-full font-medium flex items-center gap-2 text-white relative"
               style={{
                 background:
@@ -114,7 +115,7 @@ export default function Hero() {
 
               Our Projects
 
-            </button>
+            </Link>
 
 
           </div>

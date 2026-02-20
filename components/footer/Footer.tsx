@@ -3,8 +3,11 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Twitter, Facebook, Instagram, Youtube } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Footer() {
+  const router = useRouter();
   return (
     <footer className="relative text-white overflow-hidden">
 
@@ -34,7 +37,7 @@ export default function Footer() {
             </p>
 
           <div className="h-11 px-5 py-2.5 bg-white rounded-[100px] shadow-[0px_0px_85px_0px_rgba(255,255,255,1.00)] outline outline-1 outline-offset-[-1px] outline-white inline-flex justify-center items-center gap-2.5">
-  <div className="text-center justify-start text-zinc-800 font-bold font-hk text-[14px]">GET STARTED</div>
+  <Link href="/login" className="text-center justify-start text-zinc-800 font-bold font-hk text-[14px]">GET STARTED</Link>
 </div>
           </div>
 
@@ -95,14 +98,14 @@ export default function Footer() {
 
           {/* Buttons */}
           <div className="flex gap-4">
-            <Button
+            <Button onClick={()=>router.push('/login')}
               variant="outline"
               className="rounded-full border-white/30 text-white bg-transparent hover:bg-white/10 px-6"
             >
               Sign In
             </Button>
 
-            <Button
+            <Button onClick={()=>router.push("/#contact")}
               variant="outline"
               className="rounded-full border-white/30 text-white bg-transparent hover:bg-white/10 px-6"
             >

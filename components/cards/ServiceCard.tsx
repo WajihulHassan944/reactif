@@ -1,6 +1,7 @@
 "use client";
 
 import { Star, Check, ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 
 interface ServiceCardProps {
   category: string;
@@ -140,7 +141,7 @@ export default function ServiceCard({
 
 
 
-        <div
+        <Link href="/portfolio-details"
           className={`w-9 h-9 md:w-10 md:h-10 rounded-[20px] flex items-center justify-center 
           ${popular ? "bg-pink-400" : "bg-white"}`}
         >
@@ -152,7 +153,7 @@ export default function ServiceCard({
           />
 
 
-        </div>
+        </Link>
 
 
       </div>

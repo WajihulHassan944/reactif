@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function ContactSection() {
 
@@ -74,9 +75,8 @@ export default function ContactSection() {
 
           <div className="flex justify-center">
 
-            <Button
+            <Link  href="/all-vendor-services"
               onClick={handleRequestQuote}
-              disabled={loading}
               className="px-5 md:px-6 py-2.5 md:py-3 text-[14px] md:text-[15px] rounded-full font-medium 
                          bg-white text-black font-sans
                          flex items-center gap-2
@@ -100,7 +100,7 @@ export default function ContactSection() {
 
               )}
 
-            </Button>
+            </Link>
 
           </div>
 

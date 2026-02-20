@@ -1,8 +1,7 @@
 "use client"
-
-import React from "react"
 import { Button } from "@/components/ui/button"
 import { CheckCircle, Store, Truck } from "lucide-react"
+import Link from "next/link"
 
 export default function ShipmentTracking() {
   return (
@@ -104,17 +103,21 @@ export default function ShipmentTracking() {
           gap-4
         "
         >
-          <Button
+          <Link href="/order/management"
             className="
               h-11
               px-6
               bg-[#E8EDF2]
               text-black
               font-[600]
+               flex
+    items-center
+    justify-center
+    rounded-sm
             "
           >
             View Order Details
-          </Button>
+          </Link>
 
           <Button
             className="
