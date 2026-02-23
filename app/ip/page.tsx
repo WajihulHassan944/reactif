@@ -1,61 +1,50 @@
 import { headers } from 'next/headers';
 
-async function getIpData() {
-  try {
-    const headerList = await headers();
-    const forwarded = headerList.get('x-forwarded-for');
-    
-    // Logic: If on localhost, 'forwarded' might be null or ::1
-    // In that case, we pass an empty string so ipapi.co auto-detects 
-    // the IP of your internet router instead of the loopback.
-    let userIp = ''; 
-    if (forwarded && !forwarded.includes('::1') && !forwarded.includes('127.0.0.1')) {
-      userIp = forwarded.split(',')[0];
-    }
-
-    const url = userIp ? `https://ipapi.co/${userIp}/json/` : `https://ipapi.co/json/`;
-    
-    console.log(`FETCHING FROM: ${url}`); // Look at your Terminal/Command Prompt
-
-    const res = await fetch(url, {
-      cache: 'no-store', // Disable cache for testing
-    });
-
-    const result = await res.json();
-
-    if (result.error) {
-      console.error("API returned an error object:", result);
-      return { error: true, reason: result.reason };
-    }
-
-    return result;
-  } catch (err) {
-    console.error("Fetch failed entirely:", err);
-    return { error: true, reason: "Fetch failed" };
-  }
-}
-
 export default async function IpDetails() {
-  const data = await getIpData();
+  const headerList = await headers();
 
-  if (!data || data.error) {
-    return (
-      <div className="bg-amber-50 text-amber-800 p-6 rounded-lg border border-amber-200 max-w-md mx-auto mt-10">
-        <h3 className="font-bold">Server-Side Fetch Issue</h3>
-        <p className="text-sm mt-2">The API rejected the request or your IP is local.</p>
-        <p className="text-xs bg-amber-100 p-2 mt-2 rounded italic">
-          Reason: {data?.reason || "Check your terminal for logs"}
-        </p>
-      </div>
-    );
-  }
+  // Vercel-specific headers (Available on Pro and Hobby plans)
+  // These are populated automatically by the Vercel Edge network
+  const country = headerList.get('x-vercel-ip-country') || 'Unknown';
+  const region = headerList.get('x-vercel-ip-country-region') || 'Unknown';
+  const city = headerList.get('x-vercel-ip-city') || 'Unknown';
+  const ip = headerList.get('x-real-ip') || headerList.get('x-forwarded-for')?.split(',')[0] || '127.0.0.1';
+  
+  // Note: ip-api.com/ipapi.co are still useful for ISP/Org info 
+  // but for location, Vercel headers are 100% stable.
 
-  // ... (The rest of your Tailwind JSX from before)
   return (
-    <div className="max-w-md mx-auto bg-white shadow-lg rounded-xl overflow-hidden border border-gray-100 mt-10 font-sans">
-       {/* UI code here */}
-       <div className="p-4 bg-blue-600 text-white font-bold">Success: {data.ip}</div>
-       <pre className="p-4 text-xs overflow-auto">{JSON.stringify(data, null, 2)}</pre>
+    <div className="max-w-md mx-auto bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100 mt-10 font-sans">
+      <div className="bg-black p-5 text-white">
+        <h2 className="text-xl font-bold tracking-tight">Vercel Edge Identity</h2>
+        <p className="opacity-70 text-xs uppercase font-semibold mt-1">Native Header Detection</p>
+      </div>
+      
+      <div className="p-6 space-y-6">
+        <div>
+          <label className="text-gray-400 text-[10px] uppercase font-bold tracking-widest">Your IP</label>
+          <p className="text-2xl font-mono font-bold text-gray-900">{ip}</p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div className="bg-gray-50 p-3 rounded-lg">
+            <label className="text-gray-400 text-[10px] uppercase font-bold">City</label>
+            <p className="text-gray-800 font-semibold">{decodeURIComponent(city)}</p>
+          </div>
+          <div className="bg-gray-50 p-3 rounded-lg">
+            <label className="text-gray-400 text-[10px] uppercase font-bold">Region</label>
+            <p className="text-gray-800 font-semibold">{region}</p>
+          </div>
+          <div className="bg-gray-50 p-3 rounded-lg col-span-2">
+            <label className="text-gray-400 text-[10px] uppercase font-bold">Country</label>
+            <p className="text-gray-800 font-semibold">{country}</p>
+          </div>
+        </div>
+
+        <div className="text-[10px] text-center text-gray-400 border-t pt-4">
+          Powered by Vercel Edge Runtime • No External API Calls
+        </div>
+      </div>
     </div>
   );
 }
