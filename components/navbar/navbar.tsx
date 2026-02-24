@@ -58,7 +58,7 @@ const Navbar = () => {
                   />
                 </div>
                 <Link
-                  href="#services"
+                  href="/#services"
                   className="relative px-4 py-1.5 rounded-full bg-transparent text-gray-300 z-10"
                 >
                   Services
@@ -75,7 +75,7 @@ const Navbar = () => {
               </div>
 
               <Link
-                href="/catalog"
+                href="/all-vendor-services"
                 className="hover:text-blue-400 transition text-gray-300"
               >
                 Catalog
@@ -128,22 +128,22 @@ const Navbar = () => {
 
             {/* Links */}
             <div className="flex flex-col gap-5 px-6 text-[15px]">
-              <Link href="/dashboard" onClick={closeSidebar}>
+              <Link href="https://customer-dashboard-reactif.vercel.app" onClick={closeSidebar}>
                 Dashboard
               </Link>
               <Link href="/automotive" onClick={closeSidebar}>
                 Automotive
               </Link>
-              <Link href="/services" onClick={closeSidebar}>
+              <Link href="/#services" onClick={closeSidebar}>
                 Services
               </Link>
-              <Link href="/catalog" onClick={closeSidebar}>
+              <Link href="/all-vendor-services" onClick={closeSidebar}>
                 Catalog
               </Link>
-              <Link href="/contact" onClick={closeSidebar}>
+              <Link href="/#contact" onClick={closeSidebar}>
                 Contact
               </Link>
-              <button className="mt-4 bg-black text-white py-2 rounded-full">
+              <button onClick={()=>router.push('/login')} className="mt-4 bg-black text-white py-2 rounded-full">
                 Get Started
               </button>
             </div>
