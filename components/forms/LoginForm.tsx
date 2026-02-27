@@ -1,6 +1,7 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
+import { useRouter } from "next/navigation"
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -8,250 +9,166 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 
 import Link from "next/link"
-
-
+import { API_BASE_URL } from "@/lib/constants"
+import { toast } from "sonner"
 
 export default function LoginForm() {
+  const router = useRouter()
 
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [rememberMe, setRememberMe] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
+  const validateForm = () => {
+    if (!email.trim()) return "Email is required."
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) return "Invalid email format."
+    if (!password.trim()) return "Password is required."
+    if (password.length < 8) return "Password must be at least 8 characters."
+    return null
+  }
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault()
+
+  if (!navigator.onLine) {
+    toast.error("No internet connection.")
+    return
+  }
+
+  const validationError = validateForm()
+  if (validationError) {
+    toast.error(validationError)
+    return
+  }
+
+  try {
+    setLoading(true)
+
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      let message = "Login failed. Try again."
+      if (response.status === 401) message = "Invalid email or password."
+      if (response.status === 422) message = data?.message || "Validation failed."
+
+      toast.error(message)
+      return
+    }
+
+    // Save session token
+    if (data.sessionToken) localStorage.setItem("sessionToken", data.sessionToken)
+
+    // Save user object
+    const userObject = {
+      userId: data.userId,
+      email: data.email,
+      displayName: data.displayName,
+      isVerified: data.isVerified ?? false,
+    }
+    localStorage.setItem("current_user", JSON.stringify(userObject))
+
+    // Success toast
+    toast.success(userObject.isVerified ? "Login Successful!" : "Account created, please verify OTP!")
+
+    // Redirect
+    if (!userObject.isVerified) router.push("/verify-otp")
+    else router.push("/")
+
+  } catch (err: any) {
+    toast.error(err.message || "Something went wrong. Try again.")
+  } finally {
+    setLoading(false)
+  }
+}
+  
   return (
-
-
     <section className="w-full min-h-screen flex items-center justify-center px-4 py-10">
-
-
-      {/* Card Container */}
-
-
-      <div
-        className="
-        w-full
-        max-w-xl
-        rounded-3xl
-        border border-indigo-600
-        backdrop-blur-sm
-        bg-black/10
-        p-6 sm:p-8 md:p-14 md:py-17
-        flex flex-col gap-8
-
-        "
-      >
-
-
+      <div className="w-full max-w-xl rounded-3xl border border-indigo-600 backdrop-blur-sm bg-black/10 p-6 sm:p-8 md:p-14 md:py-17 flex flex-col gap-8">
         {/* Header */}
-
-
         <div className="text-center space-y-2">
-
-
-         <h1 className="bg-gradient-to-r from-[#F262B5] to-[#9F73F1] bg-clip-text text-transparent text-2xl sm:text-3xl md:text-4xl font-bold font-hk uppercase">
-  Login Your Account
-</h1>
-
-
-
+          <h1 className="bg-gradient-to-r from-[#F262B5] to-[#9F73F1] bg-clip-text text-transparent text-2xl sm:text-3xl md:text-4xl font-bold font-hk uppercase">
+            Login Your Account
+          </h1>
           <p className="text-neutral-50/60 text-sm sm:text-base font-semibold font-hk">
-
-
             Join ReactIf Printing and Design Today
-
-
           </p>
-
-
         </div>
 
-
-
         {/* Form */}
-
-
-        <form className="space-y-6">
-
-
+        <form className="space-y-6" onSubmit={handleSubmit}>
           {/* Email */}
-
-
           <div className="space-y-2">
-
-
-            <Label className="text-neutral-50 text-base font-semibold">
-
-
-              Email
-
-
-            </Label>
-
-
-
+            <Label className="text-neutral-50 text-base font-semibold">Email</Label>
             <Input
               placeholder="Enter Your Email"
               type="email"
-              className="
-              bg-transparent
-              border-neutral-50/30
-              text-white
-              focus:border-blue-600
-              "
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="bg-transparent border-neutral-50/30 text-white focus:border-blue-600"
             />
-
-
           </div>
 
-
-
           {/* Password */}
-
-
           <div className="space-y-2">
-
-
-            <Label className="text-neutral-50 text-base font-semibold">
-
-
-              Password
-
-
-            </Label>
-
-
-
+            <Label className="text-neutral-50 text-base font-semibold">Password</Label>
             <Input
               placeholder="Enter Password"
               type="password"
-              className="
-              bg-transparent
-              border-neutral-50/30
-              text-white
-              focus:border-blue-600
-              "
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="bg-transparent border-neutral-50/30 text-white focus:border-blue-600"
             />
-
-
-
-            <div className="text-right">
-
-
-              <Link
-                href="#"
-                className="text-blue-600 text-sm font-semibold"
-              >
-
+            <div className="text-right mt-2">
+              <Link href="/forgot-password" className="text-blue-600 text-sm font-semibold">
                 Forgot Password?
-
               </Link>
-
-
             </div>
-
-
           </div>
-
-
 
           {/* Checkbox */}
-
-
-          <div className="flex items-center justify-between border border-neutral-50/30 rounded-md p-3">
-
-
+          {/* <div className="flex items-center justify-between border border-neutral-50/30 rounded-md p-3">
             <div className="flex items-center gap-3">
-
-
-              <Checkbox />
-
-
-              <span className="text-neutral-50/60 text-sm">
-
-                I am not a robot
-
-              </span>
-
-
+              <Checkbox checked={rememberMe} />
+              <span className="text-neutral-50/60 text-sm">I am not a robot</span>
             </div>
-
-
-
-            {/* fake captcha box */}
-
-
             <div className="w-10 h-10 bg-neutral-400 rounded-sm" />
+          </div> */}
 
+          {/* Error */}
+          {error && <p className="text-red-500 text-sm font-medium">{error}</p>}
 
-          </div>
-
-
-
-          {/* Button */}
-
-
+          {/* Submit Button */}
           <Button
-            className="
-            w-full
-            bg-gradient-to-l
-            from-blue-600
-            via-cyan-600
-            to-blue-700
-            text-white
-            text-base sm:text-lg
-            font-semibold
-            hover:opacity-90
-            py-3
-            "
+            type="submit"
+            disabled={loading}
+            className="-mt-2 w-full bg-gradient-to-l from-blue-600 via-cyan-600 to-blue-700 text-white text-base sm:text-lg font-semibold hover:opacity-90 py-3"
           >
-
-
-            Login
-
-
+            {loading ? "Logging in..." : "Login"}
           </Button>
 
-
-
-          {/* Signup */}
-
-
+          {/* Signup Link */}
           <p className="text-center text-sm sm:text-base font-semibold text-neutral-50/60">
-
-
             Don’t Have an Account?{" "}
-
-
             <Link href="/register" className="text-blue-600">
-
-
               Sign up
-
-
             </Link>
-
-
           </p>
-
-
         </form>
 
-
-
         {/* Footer */}
-
-
         <div className="text-center text-neutral-50/60 text-xs sm:text-sm">
-
-
-          © 2026 Reactif Printing & Design. All rights reserved
-
-
+          © 2026 ReactIf Printing & Design. All rights reserved
         </div>
-
-
       </div>
-
-
     </section>
-
-
   )
-
 }

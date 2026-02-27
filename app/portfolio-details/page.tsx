@@ -28,7 +28,7 @@ const page = () => {
   finalPriceText="Gtechhalo" // Dynamic final price text
   basePriceColor="text-green-500" // Dynamic color for Base Price text
   finalPriceColor="text-green-500" // Dynamic color for Final Price text
-  route="/paint-protection"
+  route="/paint-protection/5"
 />
     </section>
     </section>
