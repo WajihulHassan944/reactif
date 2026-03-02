@@ -2,6 +2,7 @@ import Navbar from "@/components/navbar/navbar";
 import Image from "next/image";
 import ServiceCard from "@/components/cards/ServiceCard";
 import { MapPin, Star, CheckCircle } from "lucide-react";
+import GlobalBackground from "@/hooks/GlobalBackground";
 
 
 const services = [
@@ -46,12 +47,7 @@ export default function Page() {
       {/* Background */}
 
 
-      <Image
-        src="/assets/AllVendorServices/background.png"
-        alt="Background"
-        fill
-        className="object-cover -z-10 bg-[#010304]"
-      />
+    <GlobalBackground />
 
 
 

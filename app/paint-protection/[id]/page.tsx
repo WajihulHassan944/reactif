@@ -3,13 +3,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Navbar from "@/components/navbar/navbar";
-import Image from "next/image";
 import PaintDetailsHeader from "@/components/PaintProtection/PaintDetailsHeader";
 import ServicesRow from "@/components/PaintProtection/ServicesRow";
 import CarPreviewSection from "@/components/PaintProtection/CarPreviewSection";
 import PaintProtectionCard from "@/components/PaintProtection/PaintProtectionCard";
 import { API_BASE_URL } from "@/lib/constants";
 import { Loader2 } from "lucide-react";
+import GlobalBackground from "@/hooks/GlobalBackground";
 
 type ActiveItem = string | null;
 
@@ -145,13 +145,7 @@ export default function Page() {
     <section className="relative overflow-hidden min-h-screen">
       <Navbar />
 
-      {/* Background */}
-      <Image
-        src="/assets/AllVendorServices/background.png"
-        alt="Background"
-        fill
-        className="object-cover -z-10 bg-[#010304]"
-      />
+    <GlobalBackground />
 
       {/* Overlay */}
       {(isFetchingCategory || categoryError) && <Overlay />}

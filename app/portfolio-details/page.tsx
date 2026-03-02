@@ -1,6 +1,7 @@
 import Navbar from '@/components/navbar/navbar'
 import Configuration from '@/components/order/OrderAddress/Configuration'
 import WhyProtection from '@/components/order/OrderAddress/WhyProtection'
+import GlobalBackground from '@/hooks/GlobalBackground'
 import Image from 'next/image'
 
 const page = () => {
@@ -8,12 +9,7 @@ const page = () => {
     
      <section className="relative overflow-hidden pb-10">
       <Navbar />
-      <Image
-        src="/assets/AllVendorServices/background.png"
-        alt="Background"
-        fill
-        className="object-cover -z-10 bg-[#010304]"
-      />
+     <GlobalBackground />
       
     <section className="w-full flex flex-col items-center gap-10 py-8 px-5 md:px-0">
     

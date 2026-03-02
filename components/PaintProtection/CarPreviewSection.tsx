@@ -64,7 +64,8 @@ export default function CarPreviewSection({
         </div>
       ) : (
         <>
-          {/* Main Image */}
+       <div className="pt-24 pb-14 px-6">
+           {/* Main Image */}
           <div className="w-full h-full  flex items-center justify-center p-4">
             <img
               src={carImage}
@@ -103,6 +104,7 @@ export default function CarPreviewSection({
               </div>
             </div>
           </div>
+       </div>
         </>
       )}
     </div>

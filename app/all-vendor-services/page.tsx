@@ -2,7 +2,7 @@ import DeliveryService from "@/components/AllVendorServices/DeliveryService";
 import SpecialistCard from "@/components/cards/SpecialistCard";
 import Navbar from "@/components/navbar/navbar";
 import { SectionHeader } from "@/components/shared/SectionHeader";
-import Image from "next/image";
+import GlobalBackground from "@/hooks/GlobalBackground";
 
 
 const specialists = [
@@ -69,14 +69,7 @@ const page = () => {
 
 
         {/* Background */}
-
-
-        <Image
-          src="/assets/AllVendorServices/background.png"
-          alt="Background"
-          fill
-          className="object-cover -z-10 bg-[#010304]"
-        />
+<GlobalBackground />
 
 
 

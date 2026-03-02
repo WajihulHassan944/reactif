@@ -1,7 +1,6 @@
 
 import Navbar from "@/components/navbar/navbar";
 import OrderAddress from "@/components/order/OrderAddress";
-import Image from "next/image";
 
 
 export default function Page() {
@@ -10,12 +9,12 @@ export default function Page() {
 
     <section className="relative overflow-hidden">
       <Navbar />
-      <Image
-        src="/assets/AllVendorServices/background.png"
-        alt="Background"
-        fill
-        className="object-cover -z-10 bg-[#010304]"
-      />
+       <div
+  className="fixed top-0 left-0 w-screen h-screen -z-50 bg-cover bg-center bg-no-repeat bg-[#010304]"
+  style={{
+    backgroundImage: "url('/assets/AllVendorServices/background.png')",
+  }}
+/>
       <OrderAddress />
     </section>
 
