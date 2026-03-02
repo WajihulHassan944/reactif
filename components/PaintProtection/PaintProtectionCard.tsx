@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Shield } from "lucide-react";
+import { ArrowRight, Shield } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Link from "next/link";
 
 interface FieldOption {
   key: string;
@@ -54,7 +55,9 @@ export default function PaintProtectionCard({
   const currentService = services.find(
     (s) => s.id.toString() === activeItem
   );
+  const summaryBg = "bg-[#F262B5]/10 outline-[#F262B5]/10";
 
+  const activeBg = "bg-[#F262B5]";
   // Auto select first service
   useEffect(() => {
     if (!isLoading && services.length > 0) {
@@ -305,7 +308,27 @@ export default function PaintProtectionCard({
               );
             })}
           </div>
+          
         )}
+             <div className={`w-full md:w-96 p-4 rounded-lg outline outline-1 flex flex-col gap-2.5 ${summaryBg}`}>
+        <div className="text-xs font-bold font-hk text-[#F262B5]">
+          Configuration Summary
+        </div>
+
+        <div className="text-neutral-50 text-xs font-bold font-hk">
+          {activeCategory} — {currentService?.name || "No selection"}
+        </div>
+
+        <Link
+          href="/order/address"
+          className={`w-full px-4 py-3 rounded-lg flex justify-center items-center gap-2.5 cursor-pointer hover:opacity-90 transition ${activeBg}`}
+        >
+          <div className="text-neutral-50 text-xs font-bold font-hk">
+            Get Quote
+          </div>
+          <ArrowRight className="w-4 h-4 text-neutral-50" />
+        </Link>
+      </div>
     </div>
   );
 }

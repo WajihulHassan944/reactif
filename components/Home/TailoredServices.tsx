@@ -154,7 +154,7 @@ function ServiceCard({
 
         {/* BUTTON */}
 
-        <Link href="/all-vendor-services"
+        <Link href="/subcategories"
           className={`h-11 px-3 py-1.5 bg-white rounded-[100px] flex justify-center items-center ${
             isPink ? "" : "outline outline-1 outline-black"
           }`}
@@ -299,7 +299,7 @@ export default function TailoredServices() {
               }}
             >
 
-              SERVICES
+              CATEGORIES
 
             </span>
 
