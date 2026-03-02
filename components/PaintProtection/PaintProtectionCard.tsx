@@ -162,7 +162,23 @@ export default function PaintProtectionCard({
                             className={commonInputClasses}
                           />
                         );
-
+                        case "color":
+  return (
+    <div className="flex items-center gap-3">
+      <input
+        type="color"
+        required={field.is_required}
+        value={value || "#000000"}
+        onChange={(e) =>
+          handleChange(field.field_name, e.target.value)
+        }
+        className="w-14 h-10 p-1 rounded-lg bg-transparent border border-slate-700 cursor-pointer"
+      />
+      <span className="text-sm text-neutral-400">
+        {value || "#000000"}
+      </span>
+    </div>
+  );
                       case "textarea":
                         return (
                           <textarea
