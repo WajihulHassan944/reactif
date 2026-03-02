@@ -64,13 +64,13 @@ export default function CarPreviewSection({
         </div>
       ) : (
         <>
-       <div className="pt-24 pb-14 px-6">
+       <div className="pt-16 md:pt-24 pb-9 md:pb-14 px-1 md:px-6">
            {/* Main Image */}
           <div className="w-full h-full  flex items-center justify-center p-4">
             <img
               src={carImage}
               alt="Preview"
-              className="object-contain max-w-[200px] md:max-w-full rounded-xl "
+              className="object-contain max-w-full md:max-w-full rounded-xl "
             />
           </div>
 
