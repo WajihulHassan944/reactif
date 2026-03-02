@@ -65,11 +65,11 @@ export default function CarPreviewSection({
       ) : (
         <>
           {/* Main Image */}
-          <div className="w-full h-full flex items-center justify-center p-4">
+          <div className="w-full h-full  flex items-center justify-center p-4">
             <img
               src={carImage}
               alt="Preview"
-              className="object-contain max-w-[200px] md:max-w-full"
+              className="object-contain max-w-[200px] md:max-w-full rounded-xl "
             />
           </div>
 
