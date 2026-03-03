@@ -310,7 +310,7 @@ export default function PaintProtectionCard({
           </div>
           
         )}
-             <div className={`w-full md:w-96 p-4 rounded-lg outline outline-1 flex flex-col gap-2.5 ${summaryBg}`}>
+             <div className={`w-full  p-4 rounded-lg outline outline-1 flex flex-col gap-2.5 ${summaryBg}`}>
         <div className="text-xs font-bold font-hk text-[#F262B5]">
           Configuration Summary
         </div>
