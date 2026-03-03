@@ -9,7 +9,7 @@ export default function Home() {
     return (
         <Container>
           <Hero />
-         <section id="services">
+         <section id="categories">
              <TailoredServices />
          </section>
           <WhyChooseUs />

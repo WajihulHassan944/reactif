@@ -114,10 +114,10 @@ const Navbar = () => {
                   />
                 </div>
                 <Link
-                  href="/#services"
+                  href="/#categories"
                   className="relative px-4 py-1.5 rounded-full bg-transparent text-gray-300 z-10"
                 >
-                  Services
+                  Categories
                 </Link>
               </div>
 
@@ -247,8 +247,8 @@ const Navbar = () => {
               <Link href="/automotive" onClick={closeSidebar}>
                 Automotive
               </Link>
-              <Link href="/#services" onClick={closeSidebar}>
-                Services
+              <Link href="/#categories" onClick={closeSidebar}>
+                Categories
               </Link>
               <Link href="/all-vendor-services" onClick={closeSidebar}>
                 Catalog

@@ -1,42 +1,59 @@
 "use client";
 
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { IconType } from "react-icons";
-import { FaLightbulb, FaPaintRoller, FaCarSide, FaPalette } from "react-icons/fa";
-
+import { FaLightbulb } from "react-icons/fa";
+import { API_BASE_URL } from "@/lib/constants";
 
 /* =========================
-   Reusable Service Card
+   Skeleton Card
+========================= */
+
+function SkeletonCard() {
+  return (
+    <div className="relative rounded-[24px] overflow-hidden animate-pulse">
+      <div className="absolute inset-0 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 bg-[length:200%_100%] animate-[shimmer_2s_linear_infinite]" />
+      <div className="relative z-10 rounded-[24px] border border-[#F5F5F520] bg-black/40 p-6 md:p-8 flex flex-col gap-6 md:gap-8">
+        <div className="w-14 h-14 rounded-xl bg-gray-700" />
+        <div className="space-y-3">
+          <div className="h-6 w-3/4 bg-gray-700 rounded" />
+          <div className="h-4 w-1/2 bg-gray-700 rounded" />
+          <div className="h-4 w-full bg-gray-700 rounded" />
+          <div className="h-4 w-5/6 bg-gray-700 rounded" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* =========================
+   Service Card
 ========================= */
 
 interface ServiceCardProps {
+  id: number;
   title: string;
-  subtitle: string;
   description: string;
-  services: string[];
   icon: IconType;
-  variant?: "pink" | "blue";
+  index: number;
 }
 
 function ServiceCard({
+  id,
   title,
-  subtitle,
   description,
-  services,
   icon: Icon,
-  variant = "pink",
+  index,
 }: ServiceCardProps) {
-
-  const isPink = variant === "pink";
-
   return (
-
-    <div className="relative rounded-[24px] overflow-hidden">
-
+    <div
+      className="relative rounded-[24px] overflow-hidden opacity-0 translate-y-6 animate-[fadeUp_0.6s_ease_forwards]"
+      style={{ animationDelay: `${index * 0.1}s` }}
+    >
       {/* Glow */}
-
-      <div
+     <div
         className="absolute inset-0 blur-[20px] opacity-100"
         style={{
           background:
@@ -44,218 +61,119 @@ function ServiceCard({
         }}
       />
 
-
       <div className="relative z-10 rounded-[24px] border border-[#F5F5F580] bg-black/40 backdrop-blur-xl p-6 md:p-8 flex flex-col gap-6 md:gap-8">
-
-
-        {/* ICON */}
-
-        <div
-          className={`w-14 h-14 p-2.5 rounded-xl inline-flex justify-center items-center ${
-            isPink ? "bg-pink-400/20" : "bg-blue-400/20"
-          }`}
-        >
-
-          <div
-            className={`w-10 h-10 p-2 rounded-lg flex justify-center items-center ${
-              isPink
-                ? "bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600"
-                : "bg-blue-400"
-            }`}
-          >
-
-            <Icon className="w-6 h-6 text-zinc-100" />
-
+        <div className="w-14 h-14 p-2.5 rounded-xl bg-pink-400/20 flex justify-center items-center">
+          <div className="w-10 h-10 p-2 rounded-lg bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 flex justify-center items-center">
+            <Icon className="w-6 h-6 text-white" />
           </div>
-
         </div>
-
-
-
-        {/* CONTENT */}
 
         <div className="flex flex-col gap-4">
-
-
-          {/* Title */}
-
-          <div className="flex flex-col gap-2">
-
-            <h3 className="text-neutral-100 text-2xl md:text-3xl font-bold font-['HK_Grotesk']">
-
+          <div>
+            <h3 className="text-white text-2xl md:text-3xl font-bold">
               {title}
-
             </h3>
-
-
-            <p className="text-neutral-100/80 text-sm md:text-base font-bold font-['HK_Grotesk']">
-
-              {subtitle}
-
+            <p className="text-white/70 text-sm md:text-base font-bold">
+              Signboards & Stickers
             </p>
-
           </div>
 
-
-
-          <p className="text-neutral-100/80 text-sm md:text-base font-medium font-['HK_Grotesk']">
-
+          <p className="text-white/70 text-sm md:text-base">
             {description}
-
           </p>
 
-
-
-          {/* SERVICES */}
-
-          <div className="flex flex-col gap-5">
-
-
-            <p className="text-neutral-100 text-sm md:text-base font-medium font-['HK_Grotesk']">
-
+          <div>
+            <p className="text-white text-sm md:text-base font-medium mb-4">
               Key Services
-
             </p>
 
-
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
-
-
-              {services.map((service, index) => (
-
-                <div key={index} className="flex items-center gap-3">
-
-                  <div
-                    className={`w-2 h-2 rounded-full ${
-                      isPink ? "bg-pink-400" : "bg-blue-400"
-                    }`}
-                  />
-
-                  <span className="text-neutral-100 text-sm md:text-base font-medium font-['HK_Grotesk']">
-
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                "Full & Partial Wraps",
+                "Paint Protection",
+                "Fleet Branding",
+                "Window Graphics",
+              ].map((service, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-pink-400" />
+                  <span className="text-white text-sm">
                     {service}
-
                   </span>
-
                 </div>
-
               ))}
-
-
             </div>
-
           </div>
-
-
         </div>
 
-
-
-        {/* BUTTON */}
-
-        <Link href="/subcategories"
-          className={`h-11 px-3 py-1.5 bg-white rounded-[100px] flex justify-center items-center ${
-            isPink ? "" : "outline outline-1 outline-black"
-          }`}
+        <Link
+          href={`/subcategories?id=${id}`}
+          className="h-11 bg-white rounded-full flex justify-center items-center font-semibold text-zinc-800"
         >
-
-          <span className="text-zinc-800 text-base md:text-lg font-semibold font-['HK_Grotesk']">
-
-            Learn More
-
-          </span>
-
+          Learn More
         </Link>
-
-
       </div>
-
     </div>
-
   );
-
 }
-
 
 /* =========================
    Main Section
 ========================= */
 
 export default function TailoredServices() {
+  const [categories, setCategories] = useState<any[]>([]);
+  const [visibleCount, setVisibleCount] = useState(4);
+  const [loading, setLoading] = useState(true);
 
+  const gridRef = useRef<HTMLDivElement | null>(null);
 
-  const servicesData = [
+  const fetchCategories = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(`${API_BASE_URL}/categories?page=1`);
+      const data = await res.json();
 
-    {
-      title: "Visual Advertising",
-      subtitle: "Signboards & Stickers",
-      description:
-        "Eye-catching signage solutions including illuminated signs, dimensional letters, and custom stickers.",
-      services: [
-        "Full & Partial Wraps",
-        "Paint Protection",
-        "Fleet Branding",
-        "Window Graphics",
-      ],
-      icon: FaLightbulb,
-      variant: "pink" as const,
-    },
+      const active = data.data.filter(
+        (item: any) => item.status === 1
+      );
 
-    {
-      title: "Signalétique",
-      subtitle: "Signboards & Stickers",
-      description:
-        "Eye-catching signage solutions including illuminated signs, dimensional letters, and custom stickers.",
-      services: [
-        "Full & Partial Wraps",
-        "Paint Protection",
-        "Fleet Branding",
-        "Window Graphics",
-      ],
-      icon: FaCarSide,
-      variant: "blue" as const,
-    },
+      setCategories(active);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    {
-      title: "Vehicle Branding",
-      subtitle: "Creative Solutions",
-      description:
-        "Professional vehicle branding designed to maximize exposure and brand identity.",
-      services: [
-        "Full Wrap Design",
-        "Corporate Branding",
-        "Color Customization",
-        "Protective Films",
-      ],
-      icon: FaPaintRoller,
-      variant: "blue" as const,
-    },
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
-    {
-      title: "Creative Studio",
-      subtitle: "Design & Concept",
-      description:
-        "Innovative visual concepts tailored to elevate your brand presence.",
-      services: [
-        "Brand Identity",
-        "Visual Concepts",
-        "Mockups",
-        "Print Design",
-      ],
-      icon: FaPalette,
-      variant: "pink" as const,
-    },
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + 4);
 
-  ];
-
+    setTimeout(() => {
+      gridRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
+    }, 200);
+  };
 
   return (
-
-    <section className="relative w-full py-16 md:py-28 pt-16 md:pt-19 overflow-hidden">
-
-
-      {/* Background */}
+    <section className="relative w-full py-16 md:py-28 overflow-hidden">
+      <style jsx>{`
+        @keyframes shimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+        @keyframes fadeUp {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
 
       <Image
         src="/assets/hero/gradient.png"
@@ -264,82 +182,56 @@ export default function TailoredServices() {
         className="object-cover -z-10"
       />
 
-
       <div className="mx-auto px-4 sm:px-6 md:px-20">
-
-
-        {/* HEADER */}
-
-        <div className="relative text-center mb-12 md:mb-20">
-
-
-          <div className="absolute left-1/2 -translate-x-1/2 -top-20 md:-top-26 opacity-80">
-
-            <Image
-              src="/assets/header_elipse.png"
-              alt="Ellipse"
-              width={220}
-              height={120}
-            />
-
-          </div>
-
-
-
-          <h2 className="text-3xl sm:text-4xl md:text-6xl font-semibold text-white tracking-wide">
-
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-6xl font-semibold text-white">
             TAILORED{" "}
-
-            <span
-              style={{
-                background:
-                  "linear-gradient(90deg, #5FC5FF 0%, #9F73F1 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-
+            <span className="bg-gradient-to-r from-[#5FC5FF] to-[#9F73F1] bg-clip-text text-transparent">
               CATEGORIES
-
             </span>
-
           </h2>
-
-
-
-          <p className="text-gray-400 mt-4 md:mt-6 max-w-3xl mx-auto text-sm sm:text-base md:text-lg">
-
-            Complete Visual Communication Solutions Adapted To Your Needs,
-            With Particular Expertise In The Automotive Sector.
-
+          <p className="text-gray-400 mt-6 max-w-3xl mx-auto">
+            Complete Visual Communication Solutions Adapted To Your Needs.
           </p>
-
-
         </div>
 
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+            {[...Array(4)].map((_, i) => (
+              <SkeletonCard key={i} />
+            ))}
+          </div>
+        ) : (
+          <>
+            <div
+              ref={gridRef}
+              className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10"
+            >
+              {categories.slice(0, visibleCount).map((cat, index) => (
+                <ServiceCard
+                  key={cat.id}
+                  id={cat.id}
+                  title={cat.name}
+                  description={cat.description}
+                  icon={FaLightbulb}
+                  index={index}
+                />
+              ))}
+            </div>
 
-
-        {/* GRID */}
-
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
-
-
-          {servicesData.map((service, index) => (
-
-            <ServiceCard key={index} {...service} />
-
-          ))}
-
-
-        </div>
-
-
+            {visibleCount < categories.length && (
+              <div className="flex justify-center mt-14">
+                <button
+                  onClick={handleLoadMore}
+                  className="px-10 py-3 rounded-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white font-semibold hover:scale-105 transition-transform duration-300"
+                >
+                  Load More
+                </button>
+              </div>
+            )}
+          </>
+        )}
       </div>
-
-
     </section>
-
   );
-
 }
