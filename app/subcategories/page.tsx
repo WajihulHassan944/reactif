@@ -110,9 +110,11 @@ const Page = () => {
 
       <div className="mx-auto px-4 sm:px-6 md:px-30 py-12 md:py-20">
         <SectionHeader
-          title={<span style={{ color: "#F5F5F5" }}>{categoryName}</span>}
-          description="Select a service below to continue your design path."
-        />
+  title={<span style={{ color: "#F5F5F5" }}>{loading ? "" : categoryName}</span>}
+  description={
+    loading ? "" : "Select a service below to continue your design path."
+  }
+/>
 
         {loading ? (
           <div className="flex justify-center py-20">
