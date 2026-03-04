@@ -9,8 +9,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useAuth } from "@/hooks/useAuth"; 
+import { toast } from "sonner";
 import Link from "next/link";
-
+import { API_BASE_URL } from "@/lib/constants";
 interface FieldOption {
   key: string;
   display: string;
@@ -51,7 +53,8 @@ export default function PaintProtectionCard({
   isLoading = false,
 }: PaintProtectionCardProps) {
   const [formValues, setFormValues] = useState<Record<string, any>>({});
-
+const { user, loading: authLoading } = useAuth();
+const [bookingLoading, setBookingLoading] = useState(false);
   const currentService = services.find(
     (s) => s.id.toString() === activeItem
   );
@@ -79,6 +82,125 @@ export default function PaintProtectionCard({
   const handleChange = (fieldName: string, value: any) => {
     setFormValues((prev) => ({ ...prev, [fieldName]: value }));
   };
+  
+const handleCreateBooking = async () => {
+  if (!currentService) {
+    toast.error("Please select a service");
+    return;
+  }
+
+  if (!user) {
+    toast.error("Please login first");
+    return;
+  }
+
+  const token = localStorage.getItem("sessionToken");
+  if (!token) return;
+
+  setBookingLoading(true);
+
+  try {
+    const isSchedule = true;
+
+    const formData = new FormData();
+
+    // Basic fields
+    formData.append("service_id", String(currentService.id));
+    formData.append("address", "Rawalpindi, Pakistan");
+    formData.append("latitude", "33.5651");
+    formData.append("longitude", "73.0169");
+    formData.append("datetime", new Date().toISOString());
+    formData.append("status", "new_booking");
+    formData.append("is_schedule", isSchedule ? "1" : "0");
+    formData.append("distance", "5.5");
+    formData.append("base_fare", String(currentService.price || 10));
+    formData.append("subtotal", String(currentService.price || 50));
+    formData.append("extra_charges_amount", "5");
+    formData.append(
+      "total_amount",
+      String((currentService.price || 50) + 5)
+    );
+    formData.append("payment_type", "cash");
+    formData.append("booking_type", "without_bidding");
+
+    if (isSchedule) {
+      formData.append("schedule_datetime", new Date().toISOString());
+    }
+
+    // Service Data
+    formData.append(
+      "service_data",
+      JSON.stringify({
+        service_name: currentService.name,
+        category: activeCategory,
+      })
+    );
+
+    // Field Responses
+    const formattedFieldResponses = currentService.fields?.map((field) => {
+      const value = formValues[field.field_name];
+
+      // If file → append separately
+      if (field.input_type === "file" && value instanceof File) {
+        formData.append(`file_${field.id}`, value);
+      }
+
+      return {
+        field_id: field.id,
+        field_name: field.field_name,
+        field_type: field.input_type,
+        lable: field.label,
+        value:
+          field.input_type === "file"
+            ? value instanceof File
+              ? `file_${field.id}` // reference key
+              : null
+            : Array.isArray(value)
+            ? value.join(", ")
+            : value ?? "",
+      };
+    }) || [];
+
+    formData.append(
+      "field_responses",
+      JSON.stringify(formattedFieldResponses)
+    );
+
+    console.log("🚀 Sending FormData...");
+
+    const res = await fetch(`${API_BASE_URL}/booking`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        // ❌ DO NOT SET Content-Type manually
+      },
+      body: formData,
+    });
+
+    const text = await res.text();
+    console.log("📦 Raw Backend Response:", text);
+
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      toast.error("Server error");
+      return;
+    }
+
+    if (!res.ok) {
+      toast.error(data.message || "Booking failed");
+      return;
+    }
+
+    toast.success("Booking created successfully 🎉");
+  } catch (error) {
+    console.error("🔥 Booking Error:", error);
+    toast.error("Something went wrong");
+  } finally {
+    setBookingLoading(false);
+  }
+};
 
   return (
     <div className="w-full md:w-auto p-6 md:p-8 rounded-3xl outline outline-1 outline-slate-700 flex flex-col gap-6">
@@ -319,15 +441,16 @@ export default function PaintProtectionCard({
           {activeCategory} — {currentService?.name || "No selection"}
         </div>
 
-        <Link
-          href="/order/address"
-          className={`w-full px-4 py-3 rounded-lg flex justify-center items-center gap-2.5 cursor-pointer hover:opacity-90 transition ${activeBg}`}
-        >
-          <div className="text-neutral-50 text-xs font-bold font-hk">
-            Get Quote
-          </div>
+        <button
+  onClick={handleCreateBooking}
+  disabled={bookingLoading || authLoading}
+  className={`w-full px-4 py-3 rounded-lg flex justify-center items-center gap-2.5 cursor-pointer hover:opacity-90 transition ${activeBg}`}
+>
+         <div className="text-neutral-50 text-xs font-bold font-hk">
+  {bookingLoading ? "Creating Booking..." : "Get Quote"}
+</div>
           <ArrowRight className="w-4 h-4 text-neutral-50" />
-        </Link>
+        </button>
       </div>
     </div>
   );
