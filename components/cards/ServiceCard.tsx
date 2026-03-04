@@ -2,6 +2,8 @@
 
 import { Star, Check, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { FaArrowRight } from "react-icons/fa";
 
 interface ServiceCardProps {
   category: string;
@@ -11,6 +13,9 @@ interface ServiceCardProps {
   popular?: boolean;
 }
 
+
+
+
 export default function ServiceCard({
   category,
   title,
@@ -18,6 +23,9 @@ export default function ServiceCard({
   price,
   popular,
 }: ServiceCardProps) {
+  const searchParams = useSearchParams();
+
+  const queryString = searchParams.toString();
 
   return (
 
@@ -141,7 +149,7 @@ export default function ServiceCard({
 
 
 
-        <Link href="/portfolio-details"
+        <Link href={`/portfolio-details${queryString ? `?${queryString}` : ""}`}
           className={`w-9 h-9 md:w-10 md:h-10 rounded-[20px] flex items-center justify-center 
           ${popular ? "bg-pink-400" : "bg-white"}`}
         >

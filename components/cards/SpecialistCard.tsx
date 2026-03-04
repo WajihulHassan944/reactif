@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   FaStar,
   FaMapMarkerAlt,
@@ -19,6 +20,22 @@ interface SpecialistCardProps {
   price: string;
   avatarColor?: string;
 }
+
+const PortfolioLink = () => {
+  const searchParams = useSearchParams();
+
+  const queryString = searchParams.toString();
+
+  return (
+    <Link
+      href={`/vendor-portfolio${queryString ? `?${queryString}` : ""}`}
+      className="flex items-center gap-2 text-stone-300 hover:text-white cursor-pointer transition"
+    >
+      View Portfolio
+      <FaArrowRight size={12} />
+    </Link>
+  );
+};
 
 export default function SpecialistCard({
   name,
@@ -246,16 +263,7 @@ export default function SpecialistCard({
 
 
 
-        <Link href="/vendor-portfolio" className="flex items-center gap-2 text-stone-300 hover:text-white cursor-pointer transition">
-
-
-          View Portfolio
-
-
-          <FaArrowRight size={12} />
-
-
-        </Link>
+       <PortfolioLink />
 
 
       </div>

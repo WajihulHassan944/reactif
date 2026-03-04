@@ -17,7 +17,6 @@ const DesignPathModal: React.FC<Props> = ({
   onClose,
   subcategoryId,
   subcategoryName,
-  subcategorySlug,
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -26,20 +25,30 @@ const DesignPathModal: React.FC<Props> = ({
 
   const categoryId = searchParams.get("id");
 
-  const handleSelect = (pathType: "have-design" | "need-designer") => {
-    if (!categoryId) return;
+const handleSelect = (pathType: "have-design" | "need-designer") => {
+  if (!categoryId) return;
 
-    const query = new URLSearchParams({
-      path: pathType,
-      categoryId: categoryId,
-      subcategoryId: String(subcategoryId),
-      subcategoryName: subcategoryName,
-    }).toString();
-
-    router.push(`/paint-protection/${categoryId}?${query}`);
-
-    onClose();
+  const baseQuery = {
+    path: pathType,
+    categoryId: categoryId,
+    subcategoryId: String(subcategoryId),
+    subcategoryName: subcategoryName,
+    categorySlug: searchParams.get("slug") || "",
+    from: "design-path-modal",
   };
+
+  const query = new URLSearchParams(baseQuery).toString();
+
+  if (pathType === "have-design") {
+    // User already has design → go to upload / product page
+    router.push(`/paint-protection/${categoryId}?${query}`);
+  } else {
+    // User needs designer → go to vendors listing
+    router.push(`/all-vendor-services?${query}`);
+  }
+
+  onClose();
+};
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
