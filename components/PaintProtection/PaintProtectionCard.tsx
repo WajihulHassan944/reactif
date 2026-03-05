@@ -13,6 +13,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import Link from "next/link";
 import { API_BASE_URL } from "@/lib/constants";
+import { useSearchParams } from "next/navigation";
 interface FieldOption {
   key: string;
   display: string;
@@ -59,7 +60,8 @@ const [bookingLoading, setBookingLoading] = useState(false);
     (s) => s.id.toString() === activeItem
   );
   const summaryBg = "bg-[#F262B5]/10 outline-[#F262B5]/10";
-
+const searchParams = useSearchParams();
+const designerId = searchParams.get("designerId");
   const activeBg = "bg-[#F262B5]";
   // Auto select first service
   useEffect(() => {
@@ -122,7 +124,9 @@ const handleCreateBooking = async () => {
     );
     formData.append("payment_type", "cash");
     formData.append("booking_type", "without_bidding");
-
+if (designerId) {
+  formData.append("designer_id", designerId);
+}
     if (isSchedule) {
       formData.append("schedule_datetime", new Date().toISOString());
     }
