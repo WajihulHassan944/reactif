@@ -1,5 +1,5 @@
 "use client";
-
+import { z } from "zod";
 import { useEffect, useState } from "react";
 import { ArrowRight, Shield } from "lucide-react";
 import {
@@ -53,6 +53,7 @@ export default function PaintProtectionCard({
   services = [],
   isLoading = false,
 }: PaintProtectionCardProps) {
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [formValues, setFormValues] = useState<Record<string, any>>({});
 const { user, loading: authLoading } = useAuth();
 const [bookingLoading, setBookingLoading] = useState(false);
@@ -63,6 +64,64 @@ const [bookingLoading, setBookingLoading] = useState(false);
 const searchParams = useSearchParams();
 const designerId = searchParams.get("designerId");
   const activeBg = "bg-[#F262B5]";
+
+
+  const generateSchema = () => {
+  if (!currentService?.fields) return null;
+
+  const schemaFields: Record<string, any> = {};
+
+  currentService.fields.forEach((field) => {
+    let validator;
+
+    switch (field.input_type) {
+      case "email":
+        validator = z.string().email(`${field.label} must be a valid email`);
+        break;
+
+      case "number":
+        validator = z.coerce
+          .number()
+          .min(0, `${field.label} must be a valid number`);
+        break;
+
+      case "tel":
+        validator = z
+          .string()
+          .min(6, `${field.label} must be a valid phone number`);
+        break;
+
+      case "file":
+        validator = z.any();
+        break;
+
+      case "checkbox":
+        validator = z.array(z.string());
+        break;
+
+      default:
+        validator = z.string();
+    }
+
+    if (field.is_required) {
+      validator = validator.refine(
+        (val: any) =>
+          val !== undefined &&
+          val !== null &&
+          val !== "" &&
+          !(Array.isArray(val) && val.length === 0),
+        `${field.label} is required`
+      );
+    } else {
+      validator = validator.optional();
+    }
+
+    schemaFields[field.field_name] = validator;
+  });
+
+  return z.object(schemaFields);
+};
+
   // Auto select first service
   useEffect(() => {
     if (!isLoading && services.length > 0) {
@@ -83,6 +142,11 @@ const designerId = searchParams.get("designerId");
 
   const handleChange = (fieldName: string, value: any) => {
     setFormValues((prev) => ({ ...prev, [fieldName]: value }));
+    setFormErrors((prev) => {
+    const updated = { ...prev };
+    delete updated[fieldName];
+    return updated;
+  });
   };
   
 const handleCreateBooking = async () => {
@@ -90,6 +154,29 @@ const handleCreateBooking = async () => {
     toast.error("Please select a service");
     return;
   }
+
+  // 🔐 Zod Validation
+const schema = generateSchema();
+
+if (schema) {
+  const result = schema.safeParse(formValues);
+
+  if (!result.success) {
+    const errors: Record<string, string> = {};
+
+    result.error.errors.forEach((err) => {
+      const field = err.path[0] as string;
+      errors[field] = err.message;
+    });
+
+    setFormErrors(errors);
+
+    toast.error("Please fill all required fields");
+    return;
+  }
+
+  setFormErrors({});
+}
 
   if (!user) {
     toast.error("Please login first");
@@ -290,6 +377,7 @@ if (designerId) {
                             }
                             className={commonInputClasses}
                           />
+                          
                         );
                         case "color":
   return (
@@ -430,7 +518,13 @@ if (designerId) {
                         );
                     }
                   })()}
+                {formErrors[field.field_name] && (
+  <p className="text-xs text-red-400">
+    {formErrors[field.field_name]}
+  </p>
+)}
                 </div>
+               
               );
             })}
           </div>
