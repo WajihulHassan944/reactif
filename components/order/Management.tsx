@@ -156,7 +156,7 @@ try {
       {showTracking && (
         <div className="pt-4 border-t border-neutral-50/10">
           <Button
-            onClick={() => router.push(`/order/track/${booking.id}`)}
+            onClick={() => router.push(`/order/track`)}
             className="h-11 px-4 py-2 bg-pink-400 hover:bg-pink-500 text-neutral-50 rounded-lg font-hk font-semibold"
           >
             Track Shipment
