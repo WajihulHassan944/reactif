@@ -80,8 +80,19 @@ const handleSubmit = async (e: React.FormEvent) => {
     toast.success(userObject.isVerified ? "Login Successful!" : "Account created, please verify OTP!")
 
     // Redirect
-    if (!userObject.isVerified) router.push("/verify-otp")
-    else router.push("/")
+// Redirect
+if (!userObject.isVerified) {
+  router.push("/verify-otp");
+} else {
+  const redirectUrl = localStorage.getItem("redirectAfterLogin");
+
+  if (redirectUrl) {
+    localStorage.removeItem("redirectAfterLogin");
+    router.push(redirectUrl);
+  } else {
+    router.push("/");
+  }
+}
 
   } catch (err: any) {
     toast.error(err.message || "Something went wrong. Try again.")

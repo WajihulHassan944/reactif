@@ -13,7 +13,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import Link from "next/link";
 import { API_BASE_URL } from "@/lib/constants";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 interface FieldOption {
   key: string;
   display: string;
@@ -65,7 +65,7 @@ const searchParams = useSearchParams();
 const designerId = searchParams.get("designerId");
   const activeBg = "bg-[#F262B5]";
 
-
+const router = useRouter();
   const generateSchema = () => {
   if (!currentService?.fields) return null;
 
@@ -154,6 +154,17 @@ const handleCreateBooking = async () => {
     toast.error("Please select a service");
     return;
   }
+ if (!user) {
+  toast.error("Please login first");
+
+  // ✅ Save current page URL
+  if (typeof window !== "undefined") {
+    localStorage.setItem("redirectAfterLogin", window.location.href);
+  }
+
+  router.push("/login");
+  return;
+}
 
   // 🔐 Zod Validation
 const schema = generateSchema();
@@ -178,10 +189,6 @@ if (schema) {
   setFormErrors({});
 }
 
-  if (!user) {
-    toast.error("Please login first");
-    return;
-  }
 
   const token = localStorage.getItem("sessionToken");
   if (!token) return;
@@ -285,6 +292,7 @@ if (designerId) {
     }
 
     toast.success("Booking created successfully 🎉");
+    router.push('/order/management');
   } catch (error) {
     console.error("🔥 Booking Error:", error);
     toast.error("Something went wrong");
