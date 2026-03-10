@@ -158,7 +158,7 @@ const VerifyOtpForm = () => {
             <Label className="text-neutral-50 font-semibold">Email</Label>
             <Input
               value={email}
-              readOnly
+              onChange={(e)=>setEmail(e.target.value)}
               className="bg-transparent border-neutral-50/30 text-white"
             />
           </div>
