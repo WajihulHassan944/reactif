@@ -5,9 +5,26 @@ import { Button } from "@/components/ui/button";
 import { Twitter, Facebook, Instagram, Youtube } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
+interface User {
+  userId: number;
+  email: string;
+  displayName: string;
+  isVerified: boolean;
+}
 
 export default function Footer() {
   const router = useRouter();
+  const [user, setUser] = useState<User | null>(null);
+   
+    useEffect(() => {
+      const storedUser = localStorage.getItem("current_user");
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
+    }, []);
+  
   return (
     <footer className="relative text-white overflow-hidden">
 
@@ -98,12 +115,14 @@ export default function Footer() {
 
           {/* Buttons */}
           <div className="flex gap-4">
-            <Button onClick={()=>router.push('/login')}
+           {!user && (
+             <Button onClick={()=>router.push('/login')}
               variant="outline"
               className="rounded-full border-white/30 text-white bg-transparent hover:bg-white/10 px-6"
             >
               Sign In
             </Button>
+           )}
 
             <Button onClick={()=>router.push("/#contact")}
               variant="outline"

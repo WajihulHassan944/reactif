@@ -37,37 +37,39 @@ const AllVendorServicesMain = () => {
 
   const queryString = searchParams.toString();
 
-  const fetchDesigners = async (pageNumber = 1) => {
-    try {
+const fetchDesigners = async (pageNumber = 1) => {
+  try {
+    setLoading(true);
+    setError("");
 
-      setLoading(true);
-      setError("");
+    const res = await fetch(
+      `${API_BASE_URL}/designer-list?page=${pageNumber}`
+    );
 
-      const res = await fetch(
-        `${API_BASE_URL}/designer-list?page=${pageNumber}`
-      );
-
-      if (!res.ok) {
-        throw new Error("Failed to fetch designers");
-      }
-
-      const json = await res.json();
-
-      const newDesigners = json?.data || [];
-
-      setDesigners((prev) =>
-        pageNumber === 1 ? newDesigners : [...prev, ...newDesigners]
-      );
-
-      setTotalPages(json?.pagination?.totalPages || 1);
-
-    } catch (err: any) {
-      setError(err.message || "Something went wrong");
-    } finally {
-      setLoading(false);
+    if (!res.ok) {
+      throw new Error("Failed to fetch designers");
     }
-  };
 
+    const json = await res.json();
+
+    const newDesigners =
+      (json?.data || []).filter(
+        (designer: any) =>
+          designer.is_verified_user === 1 &&
+          designer.status === "active"
+      );
+
+    setDesigners((prev) =>
+      pageNumber === 1 ? newDesigners : [...prev, ...newDesigners]
+    );
+
+    setTotalPages(json?.pagination?.totalPages || 1);
+  } catch (err: any) {
+    setError(err.message || "Something went wrong");
+  } finally {
+    setLoading(false);
+  }
+};
   useEffect(() => {
     fetchDesigners(page);
   }, [page]);

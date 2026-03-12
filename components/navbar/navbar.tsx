@@ -196,7 +196,7 @@ const Navbar = () => {
                     </button>
 
                     <button
-                      onClick={() => router.push("/")}
+                      onClick={() => router.push("/settings")}
                       className="flex items-center gap-3 w-full px-4 py-2 hover:bg-gray-100"
                     >
                       <FiSettings size={16} />
