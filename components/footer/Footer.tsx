@@ -61,39 +61,38 @@ export default function Footer() {
           {/* RIGHT LINKS */}
           <div className="grid grid-cols-3 gap-10 text-sm">
 
-            <FooterColumn
-              title="Services"
-              links={[
-                "Automotive",
-                "Visual Advertising",
-                "Signalétique",
-                "Apparel",
-                "Accessories",
-              ]}
-            />
+           <FooterColumn
+  title="Services"
+  links={[
+    { label: "Automotive", href: "/services/automotive" },
+    { label: "Visual Advertising", href: "/services/visual-advertising" },
+    { label: "Signalétique", href: "/services/signaletique" },
+    { label: "Apparel", href: "/services/apparel" },
+    { label: "Accessories", href: "/services/accessories" },
+  ]}
+/>
 
-            <FooterColumn
-              title="Company"
-              links={[
-                "About Us",
-                "Careers",
-                "Blogs",
-                "Portfolio",
-                "Contact Us",
-              ]}
-            />
+<FooterColumn
+  title="Company"
+  links={[
+    { label: "About Us", href: "/about" },
+    { label: "Careers", href: "/careers" },
+    { label: "Blogs", href: "/blogs" },
+    { label: "Portfolio", href: "/portfolio" },
+    { label: "Contact Us", href: "/contact" },
+  ]}
+/>
 
-            <FooterColumn
-              title="Support"
-              links={[
-                "Help Center",
-                "FAQ",
-                "Contact Support",
-                "Terms of Service",
-                "Privacy Policy",
-              ]}
-            />
-
+<FooterColumn
+  title="Support"
+  links={[
+    { label: "Help Center", href: "/help-center" },
+    { label: "FAQ", href: "/faq" },
+    { label: "Contact Support", href: "/support" },
+    { label: "Terms of Service", href: "/terms" },
+    { label: "Privacy Policy", href: "/privacy" },
+  ]}
+/>
           </div>
         </div>
 
@@ -145,7 +144,7 @@ function FooterColumn({
   links,
 }: {
   title: string;
-  links: string[];
+  links: { label: string; href: string }[];
 }) {
   return (
     <div className="space-y-4">
@@ -153,11 +152,13 @@ function FooterColumn({
 
       <ul className="space-y-2 text-white/60">
         {links.map((link) => (
-          <li
-            key={link}
-            className="hover:text-white cursor-pointer transition"
-          >
-            {link}
+          <li key={link.label}>
+            <Link
+              href={link.href}
+              className="hover:text-white transition"
+            >
+              {link.label}
+            </Link>
           </li>
         ))}
       </ul>

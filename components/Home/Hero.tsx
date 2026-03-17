@@ -4,6 +4,7 @@ import Image from "next/image";
 import Navbar from "../navbar/navbar";
 import { ArrowRight, Car } from "lucide-react";
 import Link from "next/link";
+import { HeroText, HeroTitle, PrimaryButton } from "../hero/hero-ui";
 
 export default function Hero() {
   return (
@@ -45,35 +46,21 @@ export default function Hero() {
 
 
           {/* Heading */}
-
-          <h1
-            className="font-mulish text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
-            style={{
-              background:
-                "linear-gradient(90deg, #FAFAFA 0%, #5FC5FF 81.25%, #9F73F1 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              lineHeight: "1.2",
-            }}
-          >
-            TRANSFORM YOUR
-            <br />
-            VEHICLES INTO
-            <br />
-            ADVERTISING TOOLS
-          </h1>
-
-
+<HeroTitle>
+  TRANSFORM YOUR
+  <br />
+  VEHICLES INTO
+  <br />
+  ADVERTISING TOOLS
+</HeroTitle>
 
           {/* Description */}
 
-          <p className="text-[#F5F5F5] text-sm sm:text-base md:text-lg max-w-xl leading-relaxed mx-auto md:mx-0">
-
-            Leader In Visual Communication For The Automotive Sector. Vehicle
-            Wrapping, Marking, And Advertising With Uncompromising Professional
-            Quality.
-
-          </p>
+         <HeroText className="max-w-xl mx-auto md:mx-0">
+  Leader In Visual Communication For The Automotive Sector. Vehicle
+  Wrapping, Marking, And Advertising With Uncompromising Professional
+  Quality.
+</HeroText>
 
 
 
@@ -84,20 +71,9 @@ export default function Hero() {
 
             {/* Free Quote */}
 
-            <Link  href="/all-vendor-services"
-              className="font-sans px-6 md:px-8 py-3 rounded-full text-white font-medium flex items-center gap-2 relative"
-              style={{
-                background:
-                  "conic-gradient(from 98deg at 62.65% 113.44%, #5FC5FF 0deg, #FFAC89 135deg, #8155FF 213deg, #789DFF 286deg, #9F73F1 357deg)",
-                boxShadow: "0px 0px 80px #D43077",
-              }}
-            >
-
-              Free Quote
-
-              <ArrowRight size={18} />
-
-            </Link>
+          <PrimaryButton href="/all-vendor-services">
+  Free Quote
+</PrimaryButton>
 
 
 
