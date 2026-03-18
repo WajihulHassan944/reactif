@@ -1,31 +1,19 @@
 interface SectionHeaderProps {
-
   badgeText?: string;
-
   title: React.ReactNode;
-
   description?: string;
-
   align?: "left" | "center";
-
+  size?: "default" | "sm"; // 👈 NEW
 }
 
-
 export function SectionHeader({
-
   badgeText,
-
   title,
-
   description,
-
   align = "center",
-
+  size = "default",
 }: SectionHeaderProps) {
-
-
   return (
-
     <div
       className={`
         ${align === "center" ? "text-center" : "text-left"}
@@ -33,12 +21,8 @@ export function SectionHeader({
         px-2 md:px-0
       `}
     >
-
-
       {/* Badge */}
-
       {badgeText && (
-
         <div
           className="
             inline-flex items-center justify-center
@@ -58,40 +42,39 @@ export function SectionHeader({
             boxShadow: "0px 0px 80px #D43077",
           }}
         >
-
           {badgeText}
-
         </div>
-
       )}
-
-
 
       {/* Title */}
-
-      <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-4 md:mb-5 text-white font-hk">
-
+      <h2
+        className={`
+          font-semibold text-white font-hk mb-4 md:mb-5
+          ${
+            size === "sm"
+              ? "text-2xl md:text-4xl" // 👈 FAQ style
+              : "text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
+          }
+        `}
+      >
         {title}
-
       </h2>
 
-
-
-      {/* Description */}
-
-      {description && (
-
-        <p className="text-gray-400 max-w-4xl mx-auto text-sm sm:text-base md:text-[20px]">
-
-          {description}
-
-        </p>
-
-      )}
-
-
+     {/* Description */}
+{description && (
+  <p
+    className={`
+      text-gray-400 max-w-4xl mx-auto
+      ${
+        size === "sm"
+          ? "text-xs sm:text-sm md:text-base -mt-2"   // 👈 smaller for compact sections (FAQ etc.)
+          : "text-sm sm:text-base md:text-[20px]"
+      }
+    `}
+  >
+    {description}
+  </p>
+)}
     </div>
-
   );
-
 }

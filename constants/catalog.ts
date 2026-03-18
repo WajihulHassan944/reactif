@@ -1,0 +1,58 @@
+export const catalogData = [
+  {
+    category: "COMMERCIAL",
+    price: "$450",
+    title: "SUV Branding",
+    desc: "Custom business decals and partial wraps designed specifically for SUV fleets.",
+    image: "/assets/catalog/carOne.png",
+  },
+  {
+    category: "COMMERCIAL",
+    price: "$420",
+    title: "Sedan Branding",
+    desc: "Elegant and high-visibility branding solutions for corporate sedan fleets.",
+    image: "/assets/catalog/carTwo.png",
+  },
+  {
+    category: "COMMERCIAL",
+    price: "$380",
+    title: "Compact Car Branding",
+    desc: "Cost-effective wrap solutions for city cars and compact delivery fleets.",
+    image: "/assets/catalog/carThree.png",
+  },
+  {
+    category: "COMMERCIAL",
+    price: "$490",
+    title: "Light Van Wrapping",
+    desc: "Professional vinyl graphics for small utility vans and service vehicles.",
+    image: "/assets/catalog/carThree.png",
+  },
+  {
+    category: "AUTOMOTIVE",
+    price: "$199",
+    title: "35% Classic Tint",
+    desc: "Legal tint in many regions. Provides a sleek look without being overly dark.",
+    image: "/assets/catalog/bikeOne.png",
+  },
+  {
+    category: "AUTOMOTIVE",
+    price: "$189",
+    title: "50% Light Smoke Tint",
+    desc: "Subtle shading that still provides excellent UV protection and slight dimming.",
+    image: "/assets/catalog/bikeTwo.png",
+  },
+  {
+    category: "AUTOMOTIVE",
+    price: "$279",
+    title: "70% Clear Ceramic Tint",
+    desc: "Maximum heat and UV protection with a nearly transparent finish.",
+    image: "/assets/catalog/bikeOne.png",
+  },
+  {
+    category: "BIKES",
+    price: "$599",
+    title: "Solid Color Sport Wrap",
+    desc: "Complete aerodynamic fairing coverage in premium matte, gloss, or satin finishes.",
+    image: "/assets/catalog/bikeTwo.png",
+  },
+];

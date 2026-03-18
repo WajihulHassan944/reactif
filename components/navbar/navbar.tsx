@@ -135,7 +135,7 @@ const Navbar = () => {
               </div>
 
               <Link
-                href="/all-vendor-services"
+                href="/catalog"
                 className="hover:text-blue-400 transition text-gray-300"
               >
                 Catalog
@@ -250,7 +250,7 @@ const Navbar = () => {
               <Link href="/#categories" onClick={closeSidebar}>
                 Categories
               </Link>
-              <Link href="/all-vendor-services" onClick={closeSidebar}>
+              <Link href="/catalog" onClick={closeSidebar}>
                 Catalog
               </Link>
               <Link href="/#contact" onClick={closeSidebar}>
