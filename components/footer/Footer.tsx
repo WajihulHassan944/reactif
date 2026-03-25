@@ -89,7 +89,7 @@ export default function Footer() {
     { label: "FAQ", href: "/faq" },
     { label: "Contact Support", href: "/support" },
     { label: "Terms of Service", href: "/terms" },
-    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
   ]}
 />
           </div>
