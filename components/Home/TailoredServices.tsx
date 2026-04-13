@@ -52,8 +52,7 @@ function ServiceCard({
       className="relative rounded-[24px] overflow-hidden opacity-0 translate-y-6 animate-[fadeUp_0.6s_ease_forwards]"
       style={{ animationDelay: `${index * 0.1}s` }}
     >
-      {/* Glow */}
-     <div
+      <div
         className="absolute inset-0 blur-[20px] opacity-100"
         style={{
           background:
@@ -122,22 +121,33 @@ function ServiceCard({
 
 export default function TailoredServices() {
   const [categories, setCategories] = useState<any[]>([]);
-  const [visibleCount, setVisibleCount] = useState(4);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
   const gridRef = useRef<HTMLDivElement | null>(null);
 
-  const fetchCategories = async () => {
+  const fetchCategories = async (pageNumber = 1) => {
     try {
       setLoading(true);
-      const res = await fetch(`${API_BASE_URL}/categories?page=1`);
+
+      const res = await fetch(
+        `${API_BASE_URL}/categories?page=${pageNumber}`
+      );
       const data = await res.json();
 
       const active = data.data.filter(
         (item: any) => item.status === 1
       );
 
-      setCategories(active);
+      setCategories((prev) =>
+        pageNumber === 1 ? active : [...prev, ...active]
+      );
+
+      // ✅ Correct pagination check
+      setHasMore(
+        data.pagination.currentPage < data.pagination.totalPages
+      );
     } catch (error) {
       console.error(error);
     } finally {
@@ -146,11 +156,14 @@ export default function TailoredServices() {
   };
 
   useEffect(() => {
-    fetchCategories();
+    fetchCategories(1);
   }, []);
 
-  const handleLoadMore = () => {
-    setVisibleCount((prev) => prev + 4);
+  const handleLoadMore = async () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+
+    await fetchCategories(nextPage);
 
     setTimeout(() => {
       gridRef.current?.scrollIntoView({
@@ -195,7 +208,7 @@ export default function TailoredServices() {
           </p>
         </div>
 
-        {loading ? (
+        {loading && categories.length === 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
             {[...Array(4)].map((_, i) => (
               <SkeletonCard key={i} />
@@ -207,7 +220,7 @@ export default function TailoredServices() {
               ref={gridRef}
               className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10"
             >
-              {categories.slice(0, visibleCount).map((cat, index) => (
+              {categories.map((cat, index) => (
                 <ServiceCard
                   key={cat.id}
                   id={cat.id}
@@ -219,13 +232,13 @@ export default function TailoredServices() {
               ))}
             </div>
 
-            {visibleCount < categories.length && (
+            {hasMore && (
               <div className="flex justify-center mt-14">
                 <button
                   onClick={handleLoadMore}
                   className="px-10 py-3 rounded-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white font-semibold hover:scale-105 transition-transform duration-300"
                 >
-                  Load More
+                  {loading ? "Loading..." : "Load More"}
                 </button>
               </div>
             )}
